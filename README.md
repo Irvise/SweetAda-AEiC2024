@@ -1,4 +1,8 @@
-# Welcome to [Slidev](https://github.com/slidevjs/slidev)!
+# Welcome to the slides for the [SweetAda](https://www.sweetada.org/) presentation given in [AEiC 2024](https://www.ada-europe.org/conference2024/index.html)
+
+## Using and developing the slides
+
+[Slidev](https://sli.dev/) is used to create these slides.
 
 To start the slide show:
 

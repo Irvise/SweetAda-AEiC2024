@@ -1,16 +1,15 @@
 ---
 # try also 'default' to start simple
-theme: seriph
+theme: default
 # random image from a curated Unsplash collection by Anthony
 # like them? see https://unsplash.com/collections/94734566/slidev
-background: https://cover.sli.dev
+background: https://www.sweetada.org/images/banner.jpg
 # some information about your slides, markdown enabled
-title: Welcome to Slidev
+title: "SweetAda: a Multi-architecture Embedded Development Framework"
 info: |
-  ## Slidev Starter Template
-  Presentation slides for developers.
+  ## A showcase of SweetAda
+  Presentation slides for the SweetAda talk given in AEiC 2024
 
-  Learn more at [Sli.dev](https://sli.dev)
 # apply any unocss classes to the current slide
 class: text-center
 # https://sli.dev/custom/highlighters.html
@@ -24,21 +23,14 @@ transition: slide-left
 mdc: true
 ---
 
-# Welcome to Slidev
+# SweetAda: a Multi-architecture Embedded Development Framework
 
-Presentation slides for developers
+A showcase of the power of Ada, anywhere you may dream
 
-<div class="pt-12">
-  <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
-    Press Space for next page <carbon:arrow-right class="inline"/>
-  </span>
-</div>
+[Gabriele Galeotti](https://www.sweetada.org/) & [Fernando Oleo Blanco](https://irvise.xyz/)
 
 <div class="abs-br m-6 flex gap-2">
-  <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="text-xl slidev-icon-btn opacity-50 !border-none !hover:text-white">
-    <carbon:edit />
-  </button>
-  <a href="https://github.com/slidevjs/slidev" target="_blank" alt="GitHub" title="Open in GitHub"
+  <a href="https://github.com/gabriele-galeotti/SweetAda" target="_blank" alt="GitHub" title="Open SweetAda's Github page"
     class="text-xl slidev-icon-btn opacity-50 !border-none !hover:text-white">
     <carbon-logo-github />
   </a>
@@ -52,27 +44,15 @@ The last comment block of each slide will be treated as slide notes. It will be 
 transition: fade-out
 ---
 
-# What is Slidev?
+# Objectives
+SweetAda brings a lot to the table, we will showcase the following topics
 
-Slidev is a slides maker and presenter designed for developers, consist of the following features
-
-- 📝 **Text-based** - focus on the content with Markdown, and then style them later
-- 🎨 **Themable** - theme can be shared and used with npm packages
-- 🧑‍💻 **Developer Friendly** - code highlighting, live coding with autocompletion
-- 🤹 **Interactive** - embedding Vue components to enhance your expressions
-- 🎥 **Recording** - built-in recording and camera view
-- 📤 **Portable** - export into PDF, PNGs, or even a hostable SPA
-- 🛠 **Hackable** - anything possible on a webpage
-
-<br>
-<br>
-
-Read more about [Why Slidev?](https://sli.dev/guide/why)
+- 📤 **Portability** - run Ada code on a large number of architectures, boards and emulators
+- 🧑‍💻 **Developer Friendly & Hackable** - show expand, tweak and improve things as your needs evolve!
 
 <!--
 You can have `style` tag in markdown to override the style for the current page.
 Learn more: https://sli.dev/guide/syntax#embedded-styles
--->
 
 <style>
 h1 {
@@ -85,6 +65,7 @@ h1 {
   -moz-text-fill-color: transparent;
 }
 </style>
+-->
 
 <!--
 Here is another comment.
