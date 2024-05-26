@@ -47,29 +47,96 @@ transition: fade-out
 # Objectives
 SweetAda brings a lot to the table, we will showcase the following topics
 
-- 📤 **Portability** - run Ada code on a large number of architectures, boards and emulators
-- 🧑‍💻 **Developer Friendly & Hackable** - show expand, tweak and improve things as your needs evolve!
+- Present SweetAda
+  - What it is
+  - What it supports
+  - How to work with it
+
+- Showcase SweetAda
+  - SweetAda on an FPGA
+  - SweetAda on...
+
+---
+transition: fade-out
+---
+
+# About me
+
+## Add information here about the speaker/creator
+
+---
+---
+
+# Why SweetAda?
+<span></span>
+
+It started from a firmware for a small M68k embedded board...
+
+<v-click>
+
+### An idea... run Ada everywhere, when the CPU starts
+
+</v-click>
+
+<br>
+
+<v-click>
+
+### Issues started to appear
+
+- Toolchain? 
+- RTS (Run Time System)?
+- Build system/framework?
+</v-click>
+
+<br>
+
+<v-click>
+
+### Goal
+
+It should be capable of running on an S/390 mainframe! Emulated at least
+</v-click>
 
 <!--
-You can have `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/guide/syntax#embedded-styles
-
-<style>
-h1 {
-  background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-}
-</style>
+Maybe we could add a photo here of the M68k board to make this slide cooler
 -->
+
+---
+---
+
+# Technical stack
+
+TODO
+
+---
+
+---
+transition: fade-out
+---
+
+# SweetAda's current strengths
+<span></span>
+
+SweetAda brings a lot to the table, we will showcase the following topics
+
+- 📤 **Portability** - run Ada code on a large number of architectures, boards and emulators
+
+- 🧑‍💻 **Developer Friendly & Hackable** - show expand, tweak, improve and automate things as your needs evolve!
+- 🚄 **Fast development** - prepare, build and upload applications with just a few commands!
+- 🌕 **Full support** - supports and builds several runtimes, with exceptions, interrupts, and much more!
+- 🚀 **Fast and open development** - SweetAda has had tremendous growth and community contributions are more than welcome!
 
 <!--
 Here is another comment.
 -->
+
+---
+---
+
+# A tipical workflow, step by step, using SweetAda
+
+TODO
 
 ---
 transition: slide-up
