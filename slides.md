@@ -25,7 +25,7 @@ mdc: true
 
 # SweetAda: a Multi-architecture Embedded Development Framework
 
-A showcase of the power of Ada, anywhere you may dream
+### A showcase of the power of Ada, anywhere you may dream
 
 [Gabriele Galeotti](https://www.sweetada.org/) & [Fernando Oleo Blanco](https://irvise.xyz/)
 
@@ -64,6 +64,8 @@ transition: fade-out
 
 ## Add information here about the speaker/creator
 
+TODO
+
 ---
 ---
 
@@ -74,28 +76,29 @@ It started from a firmware for a small M68k embedded board...
 
 <v-click>
 
-### An idea... run Ada everywhere, when the CPU starts
+### An idea... run Ada <span v-mark="{ type: 'underline', color: 'red', at: '2'}">everywhere</span>, when the CPU starts
 
 </v-click>
 
 <br>
 
-<v-click>
+<v-click at="3">
 
 ### Issues started to appear
 
 - Toolchain? 
 - RTS (Run Time System)?
 - Build system/framework?
+
 </v-click>
 
 <br>
 
-<v-click>
+<v-click at="4">
 
 ### Goal
 
-It should be capable of running on an S/390 mainframe! Emulated at least
+It should be capable of running even on an S/390 mainframe! Emulated at least
 </v-click>
 
 <!--
@@ -105,576 +108,181 @@ Maybe we could add a photo here of the M68k board to make this slide cooler
 ---
 ---
 
-# Technical stack
+# Soooo... Did SweetAda deliver?
+Oh yes, it does deliver
 
-TODO
+### Currently supported architectures
+
+```
+~$ ls SweetAda/cpus
+AArch64  ARM  AVR  M68k  MicroBlaze  MIPS  NiosII  OpenRISC  PowerPC  RISC-V  SPARC  SuperH  System390  x86  x86-64
+```
+
+<v-click>
+
+### Currently supported targets
+
+```
+~$ ls SweetAda/platforms
+Altera10M50GHRD     Dreamcast     MemecFX12       PC-x86         QEMU-R2D-PLUS          Spartan3A-EK
+Amiga-FS-UAE        FRDM-KL46Z    ML605           PC-x86-64      QEMU-RISC-V            Spartan3E-SK
+Android             GEMI          MPC8306-SOM     PK-S5D9        QEMU-STM32VLDISCOVERY  STM32F769I
+ArduinoUNO          HiFive1       MPC8306-Switch  QEMU-AArch64   Quadra800              System390
+Atlas               IntegratorCP  MPC8315e        QEMU-AVR       RaspberryPi3           Template
+DE10-Lite           LEON3         MSP432P401R     QEMU-MIPS      REF405EP               VMIPS
+DECstation5000.133  M5235BCC      MVME162-510A    QEMU-OpenRISC  SBC5206                XilinxZynqA9
+DigiConnectME       Malta         NEORV32         QEMU-PPC64     SPARCstation5          ZOOM
+```
+Some even have subplatforms (different implementations)
+```
+~$ ls SweetAda/platforms/NEORV32
+platform-DE10-Lite    platform-GHDL    platform-ULX3S-Litex
+```
+
+</v-click>
 
 ---
-
----
-transition: fade-out
+transition: slide-up
 ---
 
-# SweetAda's current strengths
-<span></span>
+# A few extra goodies
 
-SweetAda brings a lot to the table, we will showcase the following topics
+### Build your own toolchain
 
-- 📤 **Portability** - run Ada code on a large number of architectures, boards and emulators
+```
+~$ ls SweetAda/toolchains
+Binutils.sh  GCC.sh  GDB.sh  GNATTOOLS.sh  linux-python-config.sh  MANUAL.txt
+```
 
-- 🧑‍💻 **Developer Friendly & Hackable** - show expand, tweak, improve and automate things as your needs evolve!
-- 🚄 **Fast development** - prepare, build and upload applications with just a few commands!
-- 🌕 **Full support** - supports and builds several runtimes, with exceptions, interrupts, and much more!
-- 🚀 **Fast and open development** - SweetAda has had tremendous growth and community contributions are more than welcome!
+Scripts to build GCC/GNAT for all of these targets, though it is not fully automated
 
-<!--
-Here is another comment.
--->
+<v-click>
+
+### It's own small C-lib
+
+```
+~$ ls SweetAda/clibrary
+ada_interface.h  clibrary.gpr      ctype.c         c_wrappers.ads  gnat.adc  stdio.h   string.c   strings.h
+assert.c         clibrary.h        ctype.h         errno.c         Makefile  stdlib.c  string.h
+assert.h         configuration.in  c_wrappers.adb  errno.h         stdio.c   stdlib.h  strings.c
+```
+
+</v-click>
+
+<v-click>
+
+### A few drivers...
+
+```
+~$ ls SweetAda/drivers
+am7990.adb        etherlinkiii.ads  ide.ads        pc.adb      piix.adb   uart16x50.adb  xps.ads
+am7990.ads        ethernet.adb      Makefile       pc.ads      piix.ads   uart16x50.ads  z8530.adb
+blockdevices.adb  ethernet.ads      mc146818a.adb  pci.adb     pl011.adb  upd4991a.adb   z8530.ads
+blockdevices.ads  goldfish.adb      mc146818a.ads  pci.ads     pl011.ads  upd4991a.ads
+configuration.in  goldfish.ads      ne2000.adb     pcican.adb  pl110.adb  vga.adb
+etherlinkiii.adb  ide.adb           ne2000.ads     pcican.ads  pl110.ads  vga.ads
+```
+
+</v-click>
+
+---
+---
+
+# SweetAda's technical stack
+How to make all this possible
+
+### GCC/GNAT compiler, the driving force
+
+Needs no introduction nor explanation. GCC with all the architectures it supports, is the central pillar
+
+<v-click>
+
+### Good old `make`
+
+Used as the skeleton for the build. It selects targets, runtimes, toolchains, flags, autogenerates/processes files, prints diagnostics... **But it does not do the compilation!**
+
+</v-click>
+
+<v-click>
+
+### GPRBuild, the Ada heavyweight builder
+
+Runs the build for the final binary/kernel
+
+</v-click>
+
+<v-click>
+
+### And some configuration files
+
+Each platform works a bit differently. A config file is present to help with the build config, post-build and upload
+
+</v-click>
 
 ---
 ---
 
 # A tipical workflow, step by step, using SweetAda
 
+## First things first, get SweetAda & find help
+```
+git clone ... && cd SweetAda
+make help
+```
+
 TODO
 
----
-transition: slide-up
-level: 2
----
-
-# Navigation
-
-Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/navigation.html)
-
-## Keyboard Shortcuts
-
-|     |     |
-| --- | --- |
-| <kbd>right</kbd> / <kbd>space</kbd>| next animation or slide |
-| <kbd>left</kbd>  / <kbd>shift</kbd><kbd>space</kbd> | previous animation or slide |
-| <kbd>up</kbd> | previous slide |
-| <kbd>down</kbd> | next slide |
-
-<!-- https://sli.dev/guide/animations.html#click-animations -->
-<img
-  v-click
-  class="absolute -bottom-9 -left-7 w-80 opacity-50"
-  src="https://sli.dev/assets/arrow-bottom-left.svg"
-  alt=""
-/>
-<p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
 
 ---
-layout: two-cols
-layoutClass: gap-16
+transition: fade-out
 ---
 
-# Table of contents
+# SweetAda's strengths
+SweetAda offers a lot to the Ada (and wider) programming community
 
-You can use the `Toc` component to generate a table of contents for your slides:
+<v-clicks>
 
-```html
-<Toc minDepth="1" maxDepth="1"></Toc>
-```
+- 📤 **Portability** - run Ada code on a large number of architectures, boards and emulators!
 
-The title will be inferred from your slide content, or you can override it with `title` and `level` in your frontmatter.
+- 🧑‍💻 **Developer friendly & Hackable** - show expand, tweak, improve and automate things as your needs evolve!
+- 🚄 **Fast & easy work** - prepare, build and upload applications with just a few commands!
+- 🌕 **Full support** - supports and builds several runtimes, with exceptions, interrupts, and much more!
+- 🚀 **Open development** - has had tremendous growth and contributions are more than welcome!
+- 📖 **MIT licensed** - hack, develop, integrate it however you like thanks to its liberal license!
 
-::right::
-
-<Toc v-click minDepth="1" maxDepth="2"></Toc>
-
----
-layout: image-right
-image: https://cover.sli.dev
----
-
-# Code
-
-Use code snippets and get the highlighting directly, and even types hover![^1]
-
-```ts {all|5|7|7-8|10|all} twoslash
-// TwoSlash enables TypeScript hover information
-// and errors in markdown code blocks
-// More at https://shiki.style/packages/twoslash
-
-import { computed, ref } from 'vue'
-
-const count = ref(0)
-const doubled = computed(() => count.value * 2)
-
-doubled.value = 2
-```
-
-<arrow v-click="[4, 5]" x1="350" y1="310" x2="195" y2="334" color="#953" width="2" arrowSize="1" />
-
-<!-- This allow you to embed external code blocks -->
-<<< @/snippets/external.ts#snippet
-
-<!-- Footer -->
-[^1]: [Learn More](https://sli.dev/guide/syntax.html#line-highlighting)
-
-<!-- Inline style -->
-<style>
-.footnotes-sep {
-  @apply mt-5 opacity-10;
-}
-.footnotes {
-  @apply text-sm opacity-75;
-}
-.footnote-backref {
-  display: none;
-}
-</style>
-
-<!--
-Notes can also sync with clicks
-
-[click] This will be highlighted after the first click
-
-[click] Highlighted with `count = ref(0)`
-
-[click:3] Last click (skip two clicks)
--->
-
----
-level: 2
----
-
-# Shiki Magic Move
-
-Powered by [shiki-magic-move](https://shiki-magic-move.netlify.app/), Slidev supports animations across multiple code snippets.
-
-Add multiple code blocks and wrap them with <code>````md magic-move</code> (four backticks) to enable the magic move. For example:
-
-````md magic-move
-```ts {*|2|*}
-// step 1
-const author = reactive({
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
-})
-```
-
-```ts {*|1-2|3-4|3-4,8}
-// step 2
-export default {
-  data() {
-    return {
-      author: {
-        name: 'John Doe',
-        books: [
-          'Vue 2 - Advanced Guide',
-          'Vue 3 - Basic Guide',
-          'Vue 4 - The Mystery'
-        ]
-      }
-    }
-  }
-}
-```
-
-```ts
-// step 3
-export default {
-  data: () => ({
-    author: {
-      name: 'John Doe',
-      books: [
-        'Vue 2 - Advanced Guide',
-        'Vue 3 - Basic Guide',
-        'Vue 4 - The Mystery'
-      ]
-    }
-  })
-}
-```
-
-Non-code blocks are ignored.
-
-```vue
-<!-- step 4 -->
-<script setup>
-const author = {
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
-}
-</script>
-```
-````
-
----
-
-# Components
-
-<div grid="~ cols-2 gap-4">
-<div>
-
-You can use Vue components directly inside your slides.
-
-We have provided a few built-in components like `<Tweet/>` and `<Youtube/>` that you can use directly. And adding your custom components is also super easy.
-
-```html
-<Counter :count="10" />
-```
-
-<!-- ./components/Counter.vue -->
-<Counter :count="10" m="t-4" />
-
-Check out [the guides](https://sli.dev/builtin/components.html) for more.
-
-</div>
-<div>
-
-```html
-<Tweet id="1390115482657726468" />
-```
-
-<Tweet id="1390115482657726468" scale="0.65" />
-
-</div>
-</div>
-
-<!--
-Presenter note with **bold**, *italic*, and ~~striked~~ text.
-
-Also, HTML elements are valid:
-<div class="flex w-full">
-  <span style="flex-grow: 1;">Left content</span>
-  <span>Right content</span>
-</div>
--->
-
----
-class: px-20
----
-
-# Themes
-
-Slidev comes with powerful theming support. Themes can provide styles, layouts, components, or even configurations for tools. Switching between themes by just **one edit** in your frontmatter:
-
-<div grid="~ cols-2 gap-2" m="t-2">
-
-```yaml
----
-theme: default
----
-```
-
-```yaml
----
-theme: seriph
----
-```
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-default/01.png?raw=true" alt="">
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-seriph/01.png?raw=true" alt="">
-
-</div>
-
-Read more about [How to use a theme](https://sli.dev/themes/use.html) and
-check out the [Awesome Themes Gallery](https://sli.dev/themes/gallery.html).
-
----
-
-# Clicks Animations
-
-You can add `v-click` to elements to add a click animation.
-
-<div v-click>
-
-This shows up when you click the slide:
-
-```html
-<div v-click>This shows up when you click the slide.</div>
-```
-
-</div>
-
-<br>
+</v-clicks>
 
 <v-click>
 
-The <span v-mark.red="3"><code>v-mark</code> directive</span>
-also allows you to add
-<span v-mark.circle.orange="4">inline marks</span>
-, powered by [Rough Notation](https://roughnotation.com/):
+### Future work?
 
-```html
-<span v-mark.underline.orange>inline markers</span>
-```
+Improve the RTS, more drivers, quality-of-life improvements, board support...
 
 </v-click>
 
-<div mt-20 v-click>
-
-[Learn More](https://sli.dev/guide/animations#click-animations)
-
-</div>
-
+---
+transition: fade-out
+layout: center
 ---
 
-# Motions
+# DEMOnstration time
+SweetAda running on...
 
-Motion animations are powered by [@vueuse/motion](https://motion.vueuse.org/), triggered by `v-motion` directive.
-
-```html
-<div
-  v-motion
-  :initial="{ x: -80 }"
-  :enter="{ x: 0 }"
-  :click-3="{ x: 80 }"
-  :leave="{ x: 1000 }"
->
-  Slidev
-</div>
-```
-
-<div class="w-60 relative">
-  <div class="relative w-40 h-40">
-    <img
-      v-motion
-      :initial="{ x: 800, y: -100, scale: 1.5, rotate: -50 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-square.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ y: 500, x: -100, scale: 2 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-circle.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ x: 600, y: 400, scale: 2, rotate: 100 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-triangle.png"
-      alt=""
-    />
-  </div>
-
-  <div
-    class="text-5xl absolute top-14 left-40 text-[#2B90B6] -z-1"
-    v-motion
-    :initial="{ x: -80, opacity: 0}"
-    :enter="{ x: 0, opacity: 1, transition: { delay: 2000, duration: 1000 } }">
-    Slidev
-  </div>
-</div>
-
-<!-- vue script setup scripts can be directly used in markdown, and will only affects current page -->
-<script setup lang="ts">
-const final = {
-  x: 0,
-  y: 0,
-  rotate: 0,
-  scale: 1,
-  transition: {
-    type: 'spring',
-    damping: 10,
-    stiffness: 20,
-    mass: 2
-  }
-}
-</script>
-
-<div
-  v-motion
-  :initial="{ x:35, y: 30, opacity: 0}"
-  :enter="{ y: 0, opacity: 1, transition: { delay: 3500 } }">
-
-[Learn More](https://sli.dev/guide/animations.html#motion)
-
-</div>
-
----
-
-# LaTeX
-
-LaTeX is supported out-of-box powered by [KaTeX](https://katex.org/).
-
-<br>
-
-Inline $\sqrt{3x-1}+(1+x)^2$
-
-Block
-$$ {1|3|all}
-\begin{array}{c}
-
-\nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &
-= \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\
-
-\nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\
-
-\nabla \cdot \vec{\mathbf{B}} & = 0
-
-\end{array}
-$$
-
-<br>
-
-[Learn more](https://sli.dev/guide/syntax#latex)
-
----
-
-# Diagrams
-
-You can create diagrams / graphs from textual descriptions, directly in your Markdown.
-
-<div class="grid grid-cols-4 gap-5 pt-4 -mb-6">
-
-```mermaid {scale: 0.5, alt: 'A simple sequence diagram'}
-sequenceDiagram
-    Alice->John: Hello John, how are you?
-    Note over Alice,John: A typical interaction
-```
-
-```mermaid {theme: 'neutral', scale: 0.8}
-graph TD
-B[Text] --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
-```
-
-```mermaid
-mindmap
-  root((mindmap))
-    Origins
-      Long history
-      ::icon(fa fa-book)
-      Popularisation
-        British popular psychology author Tony Buzan
-    Research
-      On effectiveness<br/>and features
-      On Automatic creation
-        Uses
-            Creative techniques
-            Strategic planning
-            Argument mapping
-    Tools
-      Pen and paper
-      Mermaid
-```
-
-```plantuml {scale: 0.7}
-@startuml
-
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
-}
-
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
-}
-
-cloud {
-  [Example 1]
-}
-
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
-}
-
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
-
-@enduml
-```
-
-</div>
-
-[Learn More](https://sli.dev/guide/syntax.html#diagrams)
-
----
-foo: bar
-dragPos:
-  square: 691,33,167,_,-16
----
-
-# Draggable Elements
-
-Double-click on the draggable elements to edit their positions.
-
-<br>
-
-###### Directive Usage
-
-```md
-<img v-drag="'square'" src="https://sli.dev/logo.png">
-```
-
-<br>
-
-###### Component Usage
-
-```md
-<v-drag text-3xl>
-  <carbon:arrow-up />
-  Use the `v-drag` component to have a draggable container!
-</v-drag>
-```
-
-<v-drag pos="671,205,253,_,-15">
-  <div text-center text-3xl border border-main rounded>
-    Double-click me!
-  </div>
-</v-drag>
-
-<img v-drag="'square'" src="https://sli.dev/logo.png">
-
----
-
-# Monaco Editor
-
-Slidev provides built-in Monaco Editor support.
-
-Add `{monaco}` to the code block to turn it into an editor:
-
-```ts {monaco}
-import { ref } from 'vue'
-import { emptyArray } from './external'
-
-const arr = ref(emptyArray(10))
-```
-
-Use `{monaco-run}` to create an editor that can execute the code directly in the slide:
-
-```ts {monaco-run}
-import { version } from 'vue'
-import { emptyArray, sayHello } from './external'
-
-sayHello()
-console.log(`vue ${version}`)
-console.log(emptyArray<number>(10).reduce(fib => [...fib, fib.at(-1)! + fib.at(-2)!], [1, 1]))
-```
+- [ULX3S](https://ulx3s.github.io/) FPGA, [NEORV32](https://neorv32.org/) softcore, [Litex](https://github.com/enjoy-digital/litex) build
+  - RISC-V 32-bit IMC core, 50 MHz, Timer, UART, Leds
+- QEMU-RISC-V
+  - 4 HART/CPU emulation
+- TODO
 
 ---
 layout: center
 class: text-center
 ---
 
-# Learn More
+# Thank you very much!
 
-[Documentations](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/showcases.html)
+<br>
+
+[Gabriele Galeotti](https://www.sweetada.org/) & [Fernando Oleo Blanco](https://irvise.xyz/)
+
+[gabriele.galeotti@sweetada.org](mailto:gabriele.galeotti@sweetada.org)
