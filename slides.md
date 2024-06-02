@@ -199,7 +199,7 @@ Needs no introduction nor explanation. GCC with all the architectures it support
 
 ### Good old `make`
 
-Used as the skeleton for the build. It selects targets, runtimes, toolchains, flags, autogenerates/processes files, prints diagnostics... **But it does not do the compilation!**
+Used as the skeleton for the build. It selects targets, runtimes, toolchains, flags, autogenerates/processes files, prints diagnostics...
 
 </v-click>
 
@@ -215,23 +215,158 @@ Runs the build for the final binary/kernel
 
 ### And some configuration files
 
-Each platform works a bit differently. A config file is present to help with the build config, post-build and upload
+Each platform works a bit differently. A config file is present to help with the build config, post-build and upload. Python, shell and some legacy TCL is also used
 
 </v-click>
 
 ---
 ---
 
-# A tipical workflow, step by step, using SweetAda
+# A tipical workflow, step by step, using SweetAda I
 
-## First things first, get SweetAda & find help
+## SweetAda setup
+<br>
+
+<v-click>
+
+### First things first, get SweetAda & find help
 ```
-git clone ... && cd SweetAda
+git clone https://github.com/gabriele-galeotti/SweetAda && cd SweetAda
 make help
 ```
 
-TODO
+</v-click>
 
+<v-click>
+
+### Get a toolchain
+
+- Either provide one / your own (SweetAda is **that** flexible)
+- Or build one using script found in `~$ ls SweetAda/toolchains`
+
+</v-click>
+
+<v-click>
+
+## You are ready to rock and roll
+
+</v-click>
+
+---
+---
+
+# A tipical workflow, step by step, using SweetAda II
+
+## CPU & Board setup
+
+<v-click>
+
+### Build the RTS (Run Time System)
+SweetAda supports both the `zfp` (zero-footprint profile) & `sfp` (small-footprint)
+```
+make CPU=RISC-V RTS=sfp rts # Or RTS=zfp
+# make CPU=RISC-V RTS=sfp TOOLCHAIN_NAME=riscv64-elf
+```
+
+</v-click>
+
+<v-click>
+
+### Select a board and files for the build process
+This will select the boards specific files and configuration for the build
+```
+make CPU=RISC-V PLATFORM=NEORV32 SUBPLATFORM=ULX3S-Litex createkernelcfg
+```
+
+</v-click>
+
+<v-click>
+
+### Configuration of the build (flags, post-process steps, application to be built...)
+```
+make CPU=RISC-V RTS=sfp TOOLCHAIN_NAME=riscv64-elf PLATFORM=NEORV32 SUBPLATFORM=ULX3S-Litex configure
+```
+
+</v-click>
+
+---
+---
+
+# A tipical workflow, step by step, using SweetAda III
+
+### Modify the default configuration as you see fit
+```
+[...]
+TOOLCHAIN PREFIX:        /opt/toolchains
+TOOLCHAIN NAME:          riscv64-elf
+[...]
+GCC MULTIDIR:            rv32im/ilp32
+RTS:                     sfp
+GNAT.ADC PROFILE:        sfp
+ADA MODE:                ADA22
+[...]
+USE LIBADA:              Y
+USE CLIBRARY:            
+OPTIMIZATION LEVEL:      2
+ADA GCC SWITCHES (RTS):  -mcmodel=medany
+C GCC SWITCHES (RTS):    -mcmodel=medany
+GCC SWITCHES (PLATFORM): -march=rv32i2p0_mc -mabi=ilp32
+LOWLEVEL FILES:          startup.S llkernel.S
+GCC SWITCHES (LOWLEVEL): 
+LD SCRIPT:               linker.lds
+LD SWITCHES:             -m elf32lriscv --defsym _riscv_mtime_mmap=0xFFFFF400 --defsym _riscv_mtimecmp_mmap=0xFFFFF408
+OBJCOPY SWITCHES:        
+OBJDUMP SWITCHES:        
+```
+
+---
+---
+
+# A tipical workflow, step by step, using SweetAda IIII
+
+<v-click>
+
+### Build the kernel, application into a binary
+GPRBuild takes over the build
+```
+make all # or make kernel
+make postbuild # run helper steps if needed to get the binary ready
+```
+
+</v-click>
+
+<v-click>
+
+### Run the application
+Each target has its own way of running SweetAda (launch emulator, upload via serial, JTAG...)
+```
+make run
+# or
+make session-start # make session-end
+```
+<br>
+
+</v-click>
+
+<v-click>
+
+## Enjoy!
+
+</v-click>
+
+---
+transition: fade-out
+layout: center
+---
+
+# DEMOnstration time
+SweetAda running on...
+
+- [ULX3S](https://ulx3s.github.io/) FPGA, [NEORV32](https://neorv32.org/) softcore, [Litex](https://github.com/enjoy-digital/litex) build
+  - RISC-V 32-bit IMC core, 50 MHz, Timer, UART, Leds
+- QEMU-RISC-V
+  - 4 HART/CPU emulation
+- TODO
 
 ---
 transition: fade-out
@@ -256,23 +391,9 @@ SweetAda offers a lot to the Ada (and wider) programming community
 
 ### Future work?
 
-Improve the RTS, more drivers, quality-of-life improvements, board support...
+Improve the RTS, more drivers, quality-of-life improvements, **documentation**, board support...
 
 </v-click>
-
----
-transition: fade-out
-layout: center
----
-
-# DEMOnstration time
-SweetAda running on...
-
-- [ULX3S](https://ulx3s.github.io/) FPGA, [NEORV32](https://neorv32.org/) softcore, [Litex](https://github.com/enjoy-digital/litex) build
-  - RISC-V 32-bit IMC core, 50 MHz, Timer, UART, Leds
-- QEMU-RISC-V
-  - 4 HART/CPU emulation
-- TODO
 
 ---
 layout: center
