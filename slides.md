@@ -265,7 +265,7 @@ make help
 SweetAda supports both the `zfp` (zero-footprint profile) & `sfp` (small-footprint)
 ```
 make CPU=RISC-V RTS=sfp rts # Or RTS=zfp
-# make CPU=RISC-V RTS=sfp TOOLCHAIN_NAME=riscv64-elf
+# make CPU=RISC-V RTS=sfp TOOLCHAIN_NAME=riscv64-elf rts
 ```
 
 </v-click>
@@ -275,7 +275,7 @@ make CPU=RISC-V RTS=sfp rts # Or RTS=zfp
 ### Select a board and files for the build process
 This will select the boards specific files and configuration for the build
 ```
-make CPU=RISC-V PLATFORM=NEORV32 SUBPLATFORM=ULX3S-Litex createkernelcfg
+make PLATFORM=NEORV32 SUBPLATFORM=ULX3S-Litex createkernelcfg
 ```
 
 </v-click>
@@ -284,7 +284,7 @@ make CPU=RISC-V PLATFORM=NEORV32 SUBPLATFORM=ULX3S-Litex createkernelcfg
 
 ### Configuration of the build (flags, post-process steps, application to be built...)
 ```
-make CPU=RISC-V RTS=sfp TOOLCHAIN_NAME=riscv64-elf PLATFORM=NEORV32 SUBPLATFORM=ULX3S-Litex configure
+make TOOLCHAIN_NAME=riscv64-elf PLATFORM=NEORV32 SUBPLATFORM=ULX3S-Litex configure
 ```
 
 </v-click>
@@ -396,7 +396,8 @@ Improve the RTS, more drivers, quality-of-life improvements, **documentation**, 
 </v-click>
 
 ---
-layout: center
+layout: cover
+background: ./memec.png
 class: text-center
 ---
 
