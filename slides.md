@@ -57,16 +57,6 @@ SweetAda brings a lot to the table, we will showcase the following topics
   - SweetAda on...
 
 ---
-transition: fade-out
----
-
-# About me
-
-## Add information here about the speaker/creator
-
-TODO
-
----
 ---
 
 # Why SweetAda?
@@ -364,9 +354,10 @@ SweetAda running on...
 
 - [ULX3S](https://ulx3s.github.io/) FPGA, [NEORV32](https://neorv32.org/) softcore, [Litex](https://github.com/enjoy-digital/litex) build
   - RISC-V 32-bit IMC core, 50 MHz, Timer, UART, Leds
-- QEMU-RISC-V
-  - 4 HART/CPU emulation
-- TODO
+- FRDM-KL46Z ARM board
+  - LEDS, GDB-debugging session
+- PC-X86, QEMU-ROM
+  - VGA, TCP-IP stack
 
 ---
 transition: fade-out
